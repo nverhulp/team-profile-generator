@@ -13,3 +13,19 @@ body {
     text-align: center;
     padding: 40px 0;
 }
+
+.card-header {
+    background-color: rgb(27, 137, 233);
+    color: white;
+}
+
+.card-body {
+    background-color: rgb(225, 221, 221);
+    color: black;
+}
+
+.container {
+    margin: 10px auto;
+    justify-content: space-evenly;
+    display: flex;
+}
