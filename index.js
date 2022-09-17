@@ -66,18 +66,18 @@ const addManager = () => {
             }
         }
     ])
-    .then(managerInput => {
-        const { name, id, email, office } = managerInput;
-        const manager = new Manager (name, id, email, office);
+        .then(managerInput => {
+            const { name, id, email, office } = managerInput;
+            const manager = new Manager(name, id, email, office);
 
-        teamArray.push(manager);
-        console.log(manager);
-    })
+            teamArray.push(manager);
+            console.log(manager);
+        })
 };
 
 // array of questions for employees
 const addEmployee = () => {
-    return inquirer.prompt ([
+    return inquirer.prompt([
         {
             type: 'list',
             name: 'role',
@@ -147,7 +147,7 @@ const addEmployee = () => {
             validate: nameInput => {
                 return true;
             } else {
-                console.log ("You must enter the school name");
+                console.log("You must enter the school name");
                 return false;
             }
         },
@@ -159,4 +159,46 @@ const addEmployee = () => {
             default: false
         }
     ])
-}
+        .then(employeeData => {
+            let { name, id, email, role, github, school, confirm } = employeeData;
+            let employee;
+
+            if (role === "Engineer") {
+                employee = new Engineer(name, id, email, github);
+                console.log(employee);
+            } else if (role === "Intern") {
+                employee = new Intern(name, id, email, school);
+                console.log(employee);
+            }
+            teamArray.push(employee);
+
+            if (confirm) {
+                return addEmployee(teamArray);
+            } else {
+                return teamArray;
+            }
+        })
+};
+
+// function to create HTML page file
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Your team profile has been created');
+        }
+    })
+};
+
+addManager()
+.then(addEmployee)
+.then(teamArray => {
+    return generateHTML(teamArray);
+})
+.then(pageHTML => {
+    return writeFile(pageHTML);
+})
+.catch(err => {
+    console.log(err);
+})
