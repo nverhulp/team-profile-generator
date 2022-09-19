@@ -82,7 +82,7 @@ const addEmployee = () => {
             type: 'list',
             name: 'role',
             message: 'What is the role of your employee?',
-            choices: ['Engineer', 'Intern'];
+            choices: ['Engineer', 'Intern'],
         },
         {
             type: 'input',
@@ -145,10 +145,12 @@ const addEmployee = () => {
             message: "What is the name of the intern's school?",
             when: (input) => input.role === "Intern",
             validate: nameInput => {
-                return true;
-            } else {
-                console.log("You must enter the school name");
-                return false;
+                if (schoolInput) {
+                    return true;
+                } else {
+                    console.log('You must enter the school name');
+                    return false;
+                }
             }
         },
         // ask if user wants to add more members
@@ -192,13 +194,13 @@ const writeFile = data => {
 };
 
 addManager()
-.then(addEmployee)
-.then(teamArray => {
-    return generateHTML(teamArray);
-})
-.then(pageHTML => {
-    return writeFile(pageHTML);
-})
-.catch(err => {
-    console.log(err);
-})
+    .then(addEmployee)
+    .then(teamArray => {
+        return generateHTML(teamArray);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .catch(err => {
+        console.log(err);
+    })
