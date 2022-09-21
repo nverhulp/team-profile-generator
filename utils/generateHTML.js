@@ -12,3 +12,27 @@ function initApp() {
     addMember();
 }
 
+// function to add new member
+function addMember() {
+    inquirer.prompt([{
+        type: 'input',
+        name: 'name',
+        message: "Enter team member's name",
+    },
+    {
+        type: 'list',
+        name: 'role',
+        message: "Select team member's role",
+        choices: ["Manager", "Engineer", "Intern"]
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: "Enter team member's ID",
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: "Enter team member's email address",
+    }])
+}
