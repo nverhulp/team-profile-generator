@@ -35,4 +35,25 @@ function addMember() {
         name: 'email',
         message: "Enter team member's email address",
     }])
+    .then(function({name, role, id, email}) {
+        let roleInfo = "";
+        if (role === "Engineer") {
+            roleInfo = "GitHub username";
+        } else if (role === "Intern") {
+            roleInfo = "school name";
+        } else {
+            roleInfo = "office number";
+        }
+        inquirer.prompt([{
+            name: "role info",
+            message: "Enter team member's ${roleInfo}",
+        },
+        {
+            type: "list",
+            name: "done?",
+            message: "Would you like to add more team members?",
+            choices: ["Yes", "No"]
+        }])
+        
+    })
 }
