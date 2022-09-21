@@ -35,25 +35,45 @@ function addMember() {
         name: 'email',
         message: "Enter team member's email address",
     }])
-    .then(function({name, role, id, email}) {
-        let roleInfo = "";
-        if (role === "Engineer") {
-            roleInfo = "GitHub username";
-        } else if (role === "Intern") {
-            roleInfo = "school name";
-        } else {
-            roleInfo = "office number";
-        }
-        inquirer.prompt([{
-            name: "role info",
-            message: "Enter team member's ${roleInfo}",
-        },
-        {
-            type: "list",
-            name: "done?",
-            message: "Would you like to add more team members?",
-            choices: ["Yes", "No"]
-        }])
-        
-    })
+        // user input changes depending on team member's role
+        .then(function ({ name, role, id, email }) {
+            let roleInfo = "";
+            if (role === "Engineer") {
+                roleInfo = "GitHub username";
+            } else if (role === "Intern") {
+                roleInfo = "school name";
+            } else {
+                roleInfo = "office number";
+            }
+            inquirer.prompt([{
+                name: "role info",
+                message: "Enter team member's ${roleInfo}",
+            },
+            {
+                type: "list",
+                name: "done?",
+                message: "Would you like to add more team members?",
+                choices: ["Yes", "No"]
+            }])
+                // if user chooses to add another member
+                .then(function ({ roleInfo, moreMembers }) {
+                    let newMember;
+                    if (role === "Manager") {
+                        newMember = new Manager(name, id, email, roleInfo);
+                    } else if (role === "Engineer") {
+                        newMember = new Engineer(name, id, email, roleInfo);
+                    } else {
+                        newMember = new Intern(name, id, email, roleInfo);
+                    }
+                    employees.push(newMember);
+                    addHtml(newMember)
+                        .then(function () {
+                            if (moreMembers === "Yes") {
+                                addMember();
+                            } else {
+                                finishHtml();
+                            }
+                        });
+                });
+        });
 }
