@@ -16,8 +16,9 @@ const render = require("./src/pageTemplate");
 const teamMembers = [];
 const idArray = [];
 
-// manager card
 function appMenu() {
+
+    // manager card
     function createManager() {
         console.log["Please build your team"];
         inquirer.prompt([
@@ -50,6 +51,7 @@ function appMenu() {
         });
     }
     
+    // create team
     function createTeam() {
         inquirer.prompt([
             {
@@ -61,18 +63,69 @@ function appMenu() {
         ]);
     }
 
+    // engineer card
     function addEngineer() {
         inquirer.prompt([
-
-        ])
+            {
+                type: "input",
+                name: "engineerName",
+                message: "What is the engineer's name?",
+            },
+            {
+                type: "input",
+                name: "engineerId",
+                message: "What is the engineer's ID?",
+            },
+            {
+                type: "input",
+                name: "engineerEmail",
+                message: "What is the engineer's email?",
+            },
+            {
+                type: "input",
+                name: "engineerGitHub",
+                message: "What is the engineer's GitHub profile?",
+            }
+        ]).then(answers => {
+            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGitHub);
+            teamMembers.push(engineer);
+            idArray.push(answers.engineerId);
+            createTeam();
+        });
     }
 
+    // intern card
     function addIntern() {
         inquirer.prompt([
-
-        ])
+            {
+                type: "input",
+                name: "internName",
+                message: "What is the intern's name?",
+            },
+            {
+                type: "input",
+                name: "internId",
+                message: "What is the intern's ID?",
+            },
+            {
+                type: "input",
+                name: "internEmail",
+                message: "What is the intern's email?",
+            },
+            {
+                type: "input",
+                name: "internSchoolName",
+                message: "What is the intern's school name?",
+            }
+        ]).then(answers => {
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchoolName);
+            teamMembers.push(intern);
+            idArray.push(answers.internId);
+            createTeam();
+        });
     }
 
+    // build team
     function buildTeam() {
         // create output directory if output path doesn't exist
         if (!fs.existsSync(OUTPUT_DIR)) {
@@ -82,12 +135,8 @@ function appMenu() {
     }
 
     createManager();
+    createEngineer();
+    createIntern();
 }
 
 appMenu();
-
-// engineer card
-
-// intern card
-
-// create team
