@@ -1,52 +1,57 @@
-const managerHTML = manager => {
+const generateManager = manager => {
     return`
-    <div class="dist card bg-primary mb-3" style="width: 18rem;" >
+    <div class="card employee-card">
     <div class="card-header">
-      Manager <i class="fab fa-black-tie"></i>
-      </span>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Name:${manager.name}</li>
-      <li class="list-group-item">Employee ID:${manager.id}</li>
-      <li class="list-group-item">Office Number:${manager.officeNumber}</li>
-      <li class="list-group-item">Email:<a href="mailto:${manager.email}">${manager.email}</a></li>
-    </ul>
-  </div>
-    
-    `  
+            <h2 class="card-title">${manager.name}</h2>
+            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>Manager</h3>
+        </div>
+        <div class="card-body">
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">ID: ${manager.id}</li>
+                    <li class="list-group-item">Email: <a href="mailto: ${manager.email}">${manager.email}</a></li>
+                    <li class="list-group-item">Office Number: ${manager.officeNumber}</li>
+                </ul>
+            </div>
+        </div>
+        `;
+}
+const generateEngineer = engineer => {
+    return`
+    <div class="card employee-card">
+    <div class="card-header">
+            <h2 class="card-title">${engineer.name}</h2>
+            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>Engineer</h3>
+        </div>
+        <div class="card-body">
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">ID: ${engineer.id}</li>
+                    <li class="list-group-item">Email: <a href="mailto: ${engineer.email}">${engineer.email}</a></li>
+                    <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.github}">${engineer.github}</a></li>
+                </ul>
+            </div>
+        </div>
+        `;
+}
 
-}
-const engineerHTML = engineer => {
+const generateIntern = intern => {
     return`
-    <div class="dist card bg-success mb-3" style="width: 18rem;" >
+    <div class="card employee-card">
     <div class="card-header">
-      Engineer <i class="fas fa-chalkboard-teacher"></i>
-      </span>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Name:${engineer.name}</li>
-      <li class="list-group-item">Employee ID:${engineer.id}</li>
-      <li class="list-group-item">GitHub:<a href="https://github.com/${engineer.github}">${engineer.github}</a></li>
-      <li class="list-group-item">Email:<a href="mailto:${engineer.email}">${engineer.email}</a></li>
-    </ul>
-  </div>
-    `  
-}
-const internHTML = intern => {
-    return`
-    <div class="dist card bg-info mb-3" style="width: 18rem;" >
-    <div class="card-header">
-      Intern <i class="fas fa-baby"></i>
-      </span>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Name:${intern.name}</li>
-      <li class="list-group-item">Employee ID:${intern.id}</li>
-      <li class="list-group-item">School Name:${intern.school}</li>
-      <li class="list-group-item">Email:<a href="mailto:${intern.email}">${intern.email}</a></li>
-    </ul>
-  </div>
-    `  
+            <h2 class="card-title">${intern.name}</h2>
+            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>Intern</h3>
+        </div>
+        <div class="card-body">
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">ID: ${intern.id}</li>
+                    <li class="list-group-item">Email: <a href="mailto: ${intern.email}">${intern.email}</a></li>
+                    <li class="list-group-item">School Name: ${intern.school}</li>
+                </ul>
+            </div>
+        </div>
+        `;
 }
 const generatePage = employeeArr => {
     empList = [];
@@ -55,13 +60,13 @@ const generatePage = employeeArr => {
 
 
         if (role === 'Manager'){ 
-            empList.push(managerHTML(employeeArr[i]));
+            empList.push(generateManager(employeeArr[i]));
         }
         if (role === 'Engineer'){ 
-            empList.push(engineerHTML(employeeArr[i]));
+            empList.push(generateEngineer(employeeArr[i]));
         }
         if (role === 'Intern'){ 
-            empList.push(internHTML(employeeArr[i]));
+            empList.push(generateIntern(employeeArr[i]));
         }
     }
     const  mergedTeam = empList.join(''); 
@@ -71,50 +76,39 @@ const generatePage = employeeArr => {
 }
 
 const HTMLPage = mergedTeam =>{
-    return`
+    return `
     <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link 
-      rel="stylesheet" 
-      href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
-    <link rel="stylesheet" href="./style.css" />
-    <title> My Team </title>
-  </head>
-  <body>
-  <header>
-  <nav class="navbar" >
-    <span class="navbar-brand mb-0 h1 w-100 text-center" ><h1> My Team </h1></span>
-</nav>
-</header>
-      <main>
-    ${mergedTeam}
-      </main>
-      
-  </body>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  </html> 
-    `
+    <title>My Team</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c502137733.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 jumbotron mb-3 team-heading">
+                <h1 class="text-center">My Team</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="team-area col-12 d-flex justify-content-center">
+                ${mergedTeam}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    `;
 }
 
 
