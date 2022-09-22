@@ -7,147 +7,87 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const render = require("./src/pageTemplate");
+
 // array
 const teamMembers = [];
+const idArray = [];
 
 // manager card
 function appMenu() {
     function createManager() {
         console.log["Please build your team"];
         inquirer.prompt([
+            {
+                type: "input",
+                name: "managerName",
+                message: "What is the team manager's name?",
+            },
+            {
+                type: "input",
+                name: "managerId",
+                message: "What is the team manager's ID?",
+            },
+            {
+                type: "input",
+                name: "managerEmail",
+                message: "What is the team manager's email?",
+            },
+            {
+                type: "input",
+                name: "managerOfficeNumber",
+                message: "What is the team manager's office number?",
+            }
+        ])
+        .then(answers => {
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+            teamMembers.push(manager);
+            idArray.push(answers.managerId);
+            fs.createReadStream();
+        });
+    }
+    
+    function createTeam() {
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "memberChoice",
+                message: "Which type of team member would you like to add?",
+                choices: ["Engineer", "Intern", "I don't want to add any more team members"]
+            }
+        ]);
+    }
+
+    function addEngineer() {
+        inquirer.prompt([
 
         ])
     }
+
+    function addIntern() {
+        inquirer.prompt([
+
+        ])
+    }
+
+    function buildTeam() {
+        // create output directory if output path doesn't exist
+        if (!fs.existsSync(OUTPUT_DIR)) {
+            fs.mkdirSync(OUTPUT_DIR)
+        }
+        fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+    }
+
+    createManager();
 }
+
+appMenu();
 
 // engineer card
 
 // intern card
 
 // create team
-
-
-
-// function to initialize app
-function initApp() {
-    startHTML();
-    addMember();
-}
-
-// function to add new member
-function addMember() {
-    inquirer.prompt([{
-        type: 'input',
-        name: 'name',
-        message: "Enter team member's name",
-        validate: nameInput => {
-            if (nameInput) {
-                return true;
-            } else {
-                console.log("You must enter team member's name");
-                return false;
-            }
-        }
-    },
-    {
-        type: 'list',
-        name: 'role',
-        message: "Select team member's role",
-        choices: ["Manager", "Engineer", "Intern"]
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: "Enter team member's ID",
-        validate: idInput => {
-            if (idInput) {
-                return true;
-            } else {
-                console.log("You must enter team member's ID");
-                return false;
-            }
-        }
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: "Enter team member's email address",
-        validate: emailInput => {
-            if (emailInput) {
-                return true;
-            } else {
-                console.log("You must enter team member's email address");
-                return false;
-            }
-        }
-    }])
-
-    // user input changes depending on team member's role
-    .then(function ({ name, role, id, email }) {
-        let roleInfo = "";
-        if (role === "Engineer") {
-            roleInfo = "GitHub username";
-        } else if (role === "Intern") {
-            roleInfo = "school name";
-        } else {
-            roleInfo = "office number";
-        }
-        inquirer.prompt([{
-            name: "role info",
-            message: "Enter team member's ${roleInfo}",
-        },
-        {
-            type: "list",
-            name: "done?",
-            message: "Would you like to add more team members?",
-            choices: ["Yes", "No"]
-        }])
-            // if user chooses to add another member
-            .then(function ({ roleInfo, moreMembers }) {
-                let newMember;
-                if (role === "Manager") {
-                    newMember = new Manager(name, id, email, roleInfo);
-                } else if (role === "Engineer") {
-                    newMember = new Engineer(name, id, email, roleInfo);
-                } else {
-                    newMember = new Intern(name, id, email, roleInfo);
-                }
-                employees.push(newMember);
-                addHtml(newMember)
-                    .then(function () {
-                        if (moreMembers === "Yes") {
-                            addMember();
-                        } else {
-                            finishHtml();
-                        }
-                    });
-            });
-    });
-}
-
-// function to create HTML page file
-function startHTML() {
-    return `
-        const html = <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Team Profile</title>
-        </head>
-        <body>
-            <nav class="navbar navbar-dark bg-dark mb-5">
-                <span class="navbar-brand mb-0 h1 w-100 text-center">Team Profile</span>
-            </nav>
-            <div class="container">
-                <div class="row">`;
-        fs.writeFile("./output/index.html", html, function(err) {
-            if (err) {
-                console.log(err);
-            }
-        });
-        console.log("start");
-}
-
-// function if user chooses to add another team member
