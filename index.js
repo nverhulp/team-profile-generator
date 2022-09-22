@@ -1,10 +1,32 @@
 // packages needed for this application
 const inquirer = require("inquirer");
 const fs = require("fs");
-const Engineer = require("./lib/engineer");
-const Intern = require("./lib/intern");
-const Manager = require("./lib/manager");
-const employees = [];
+const path = require("path");
+
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+
+// array
+const teamMembers = [];
+
+// manager card
+function appMenu() {
+    function createManager() {
+        console.log["Please build your team"];
+        inquirer.prompt([
+
+        ])
+    }
+}
+
+// engineer card
+
+// intern card
+
+// create team
+
+
 
 // function to initialize app
 function initApp() {
@@ -127,3 +149,5 @@ function startHTML() {
         });
         console.log("start");
 }
+
+// function if user chooses to add another team member
