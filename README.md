@@ -34,5 +34,12 @@ WHEN I decide to finish building my team
 THEN I exit the application, and the HTML is generated
 
 ## Comments
+1. Functional and allows user input in command-line
+2. Asks for manager information first
+3. Allows user to add infinite number of engineers/interns
+4. User input is transferred and integrated in html file
+5. Information appears on deployed application/page
 
 ## Credits
+1. Review session hosted by Stacy
+2. Article about Javascript and generator function by [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
