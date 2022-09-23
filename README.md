@@ -13,6 +13,8 @@ Your challenge is to build a Node.js command-line application that takes in info
 
 ## Video Tutorial
 
+https://user-images.githubusercontent.com/105401594/191876385-23864644-dfa2-4954-8648-0c14325d8daa.mp4
+
 ## Acceptance Criteria
 
 GIVEN a command-line application that accepts user input
